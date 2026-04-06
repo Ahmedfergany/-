@@ -296,72 +296,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
   </button>
 </div>
 
-<script type="module">
-// ═══════════ Firebase Config ═══════════
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, onValue, set, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyA5DL-48pnqWQ5KgHmomFfXt0paaDjnE_k",
-  authDomain: "madrasah-rabbaniyah.firebaseapp.com",
-  databaseURL: "https://madrasah-rabbaniyah-default-rtdb.firebaseio.com",
-  projectId: "madrasah-rabbaniyah",
-  storageBucket: "madrasah-rabbaniyah.firebasestorage.app",
-  messagingSenderId: "247154312347",
-  appId: "1:247154312347:web:3948bb25423c4ec40f723e"
-};
-
-const app = initializeApp(firebaseConfig);
-const db  = getDatabase(app);
-const lecsRef = ref(db, 'lectures');
-
-// ── مزامنة تلقائية: لما تتغير المحاضرات في Firebase تتحدث عند الكل ──
-onValue(lecsRef, (snapshot) => {
-  const data = snapshot.val();
-  adminLectures = data ? Object.values(data) : [];
-  save('wird_lectures', adminLectures); // cache محلي
-  if(document.getElementById('page-lectures').classList.contains('active')) renderLectures();
-  if(document.getElementById('page-admin').classList.contains('active') && adminUnlocked) renderAdmin();
-});
-
-// ── رفع محاضرة لـ Firebase ──
-window.fbAddLecture = function(){
-  const title    = document.getElementById('a-title').value.trim();
-  const section  = document.getElementById('a-section').value;
-  const url      = document.getElementById('a-url').value.trim();
-  const date     = document.getElementById('a-date').value.trim();
-  const duration = document.getElementById('a-dur').value.trim();
-  const qRaw     = document.getElementById('a-qs').value.trim();
-  if(!title||!url){alert('العنوان والرابط مطلوبان');return;}
-  const questions = qRaw ? qRaw.split('\n').map(s=>s.trim()).filter(Boolean) : [];
-  const id  = 'lec_'+Date.now();
-  const lec = {id, title, section, url, date, duration, questions};
-  set(ref(db,'lectures/'+id), lec)
-    .then(()=>{
-      document.getElementById('a-title').value='';
-      document.getElementById('a-url').value='';
-      document.getElementById('a-date').value='';
-      document.getElementById('a-dur').value='';
-      document.getElementById('a-qs').value='';
-      showToast('✅ تمت إضافة المحاضرة وظهرت عند الإخوة فوراً!');
-    })
-    .catch(e=>alert('خطأ: '+e.message));
-};
-
-// ── حذف محاضرة من Firebase ──
-window.fbDeleteLecture = function(id){
-  remove(ref(db,'lectures/'+id))
-    .then(()=>showToast('🗑️ تم حذف المحاضرة'))
-    .catch(e=>alert('خطأ: '+e.message));
-};
-
-function showToast(msg){
-  let t=document.getElementById('fb-toast');
-  if(!t){t=document.createElement('div');t.id='fb-toast';t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#0F6E56;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-family:Tajawal,sans-serif;z-index:999;box-shadow:0 4px 15px rgba(0,0,0,.2);';document.body.appendChild(t);}
-  t.textContent=msg;t.style.opacity='1';
-  setTimeout(()=>t.style.opacity='0',3000);
-}
-</script>
+<script>
 const SHEIKH_TG='201158313603';
 const SECTIONS=['الأدب','التجويد','التزكية','الحديث','السيرة','العقيدة','الفقه'];
 
@@ -768,13 +703,29 @@ function checkPass(){
 }
 
 function addLecture(){
-  if(typeof window.fbAddLecture==='function') window.fbAddLecture();
-  else alert('جارٍ تحميل Firebase...');
+  const title=document.getElementById('a-title').value.trim();
+  const section=document.getElementById('a-section').value;
+  const url=document.getElementById('a-url').value.trim();
+  const date=document.getElementById('a-date').value.trim();
+  const duration=document.getElementById('a-dur').value.trim();
+  const qRaw=document.getElementById('a-qs').value.trim();
+  if(!title||!url){alert('العنوان والرابط مطلوبان');return;}
+  const questions=qRaw?qRaw.split('\n').map(s=>s.trim()).filter(Boolean):[];
+  const lec={id:'lec_'+Date.now(),title,section,url,date,duration,questions};
+  adminLectures.push(lec);
+  save('wird_lectures',adminLectures);
+  document.getElementById('a-title').value='';
+  document.getElementById('a-url').value='';
+  document.getElementById('a-date').value='';
+  document.getElementById('a-dur').value='';
+  document.getElementById('a-qs').value='';
+  renderAdmin();
 }
 
 function deleteLecture(id){
-  if(typeof window.fbDeleteLecture==='function') window.fbDeleteLecture(id);
-  else{ adminLectures=adminLectures.filter(l=>l.id!==id); save('wird_lectures',adminLectures); renderAdmin(); }
+  adminLectures=adminLectures.filter(l=>l.id!==id);
+  save('wird_lectures',adminLectures);
+  renderAdmin();
 }
 
 function exportCode(){
@@ -819,10 +770,6 @@ function renderAdmin(){
   </div>`).join('');
 
   el.innerHTML=`<div class="admin-wrap">
-    <div class="admin-card" style="background:var(--green-light);border-color:var(--green)">
-      <h3 style="color:var(--green-dark)">🔴 مباشر — Firebase متصل</h3>
-      <p class="hint" style="color:var(--green-dark)">أي محاضرة تضيفها أو تحذفها تظهر عند كل الإخوة فوراً بدون أي خطوة إضافية ✅</p>
-    </div>
     <div class="admin-card">
       <h3>➕ إضافة محاضرة جديدة</h3>
       <select id="a-section">
@@ -839,9 +786,17 @@ function renderAdmin(){
     </div>
 
     ${adminLectures.length?`<div class="admin-card">
-      <h3>📋 المحاضرات الحالية (${adminLectures.length})</h3>
+      <h3>📋 المحاضرات المضافة (${adminLectures.length})</h3>
       ${rows}
     </div>`:''}
+
+    <div class="admin-card">
+      <h3>📤 مشاركة المحاضرات مع الطلاب</h3>
+      <p class="hint">لما تضيف محاضرات جديدة، اضغط "تصدير" ثم انسخ الكود وابعته للطلاب عبر تليجرام — هيحدّثوا الملف عندهم.</p>
+      <button class="add-lec-btn" style="background:var(--green-dark)" onclick="exportCode()">📤 تصدير بيانات المحاضرات</button>
+      <textarea id="export-area" class="copy-area" readonly placeholder="اضغط تصدير يظهر الكود هنا..."></textarea>
+      <button class="copy-btn" onclick="copyExport()">نسخ الكود</button>
+    </div>
 
     <div class="admin-card">
       <h3>⚙️ إعدادات</h3>
