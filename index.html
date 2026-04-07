@@ -137,9 +137,15 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .open-link-btn{display:inline-flex;align-items:center;gap:5px;margin-top:6px;font-size:12px;color:var(--purple);background:rgba(127,119,221,.13);padding:4px 10px;border-radius:20px;border:none;cursor:pointer;font-family:'Tajawal',sans-serif;}
 .open-link-btn:hover{background:rgba(127,119,221,.23);}
 .qs-section{border-top:.5px solid var(--border);}
-.qs-header{padding:8px 14px;display:flex;justify-content:space-between;background:var(--bg);border-bottom:.5px solid var(--border);}
+.qs-header{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;background:var(--bg);border-bottom:.5px solid var(--border);cursor:pointer;gap:10px;}
 .qs-label{font-size:12px;font-weight:700;color:var(--muted);}
 .qs-prog{font-size:12px;font-weight:700;color:var(--green-dark);}
+.qs-hint{font-size:11px;color:var(--muted);}
+.qs-arrow{font-size:16px;color:var(--green-dark);transition:transform .2s ease;}
+.qs-section.expanded .qs-arrow{transform:rotate(180deg);}
+.qs-body{display:none;background:#fff;}
+.qs-section.expanded .qs-body{display:block;}
+.q-entry{border-bottom:.5px solid var(--border);}
 .q-item{border-bottom:.5px solid var(--border);}
 .q-item:last-child{border-bottom:none;}
 .q-head{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;cursor:pointer;transition:background .12s;}
@@ -157,8 +163,18 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .q-item.answered .q-answer-box{display:block;}
 .q-answer-inp{width:100%;padding:8px 10px;border:1px solid rgba(29,158,117,.25);border-radius:10px;font-size:13px;font-family:'Tajawal',sans-serif;background:#fff;color:var(--text);outline:none;resize:none;min-height:65px;}
 .q-answer-inp:focus{border-color:var(--green);}
-.q-send-btn{margin-top:8px;padding:8px 16px;background:var(--tg);color:#fff;border:none;border-radius:10px;font-size:13px;font-family:'Tajawal',sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+.q-send-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+.q-send-btn{padding:8px 16px;background:var(--tg);color:#fff;border:none;border-radius:10px;font-size:13px;font-family:'Tajawal',sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
 .q-send-btn:hover{background:#1a8bc2;}
+.q-attach-wrap{padding:12px 14px 14px;background:var(--bg);display:flex;flex-direction:column;gap:8px;}
+.q-attach-title{font-size:12px;font-weight:700;color:var(--green-dark);}
+.q-attach-sub{font-size:12px;color:var(--muted);line-height:1.6;}
+.q-file-input{width:100%;padding:8px;border:1px dashed rgba(29,158,117,.35);border-radius:12px;background:#fff;font-family:'Tajawal',sans-serif;font-size:12px;}
+.q-file-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.q-alt-btn{padding:8px 14px;background:#fff;color:var(--green-dark);border:1px solid rgba(29,158,117,.25);border-radius:10px;font-size:13px;font-family:'Tajawal',sans-serif;cursor:pointer;}
+.q-file-preview{background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px;display:flex;flex-direction:column;gap:8px;}
+.q-file-name{font-size:12px;color:var(--text);word-break:break-word;}
+.q-file-img{width:100%;max-height:220px;object-fit:contain;border-radius:10px;background:var(--bg);}
 
 /* Section tabs in lectures */
 .sec-tabs{display:flex;gap:6px;padding:8px 1rem 0;overflow-x:auto;scrollbar-width:none;}
@@ -756,11 +772,41 @@ function hwKey(lid,qi){return lid+'__'+qi;}
 function isAns(lid,qi){const k=hwKey(lid,qi);return !!(hwState[k]&&hwState[k].answered);}
 function toggleQ(lid,qi){const k=hwKey(lid,qi);if(!hwState[k])hwState[k]={answered:false,text:''};hwState[k].answered=!hwState[k].answered;save('wird_hw_state',hwState);renderLectures();}
 function saveAns(lid,qi,txt){const k=hwKey(lid,qi);if(!hwState[k])hwState[k]={answered:true,text:''};hwState[k].text=txt;save('wird_hw_state',hwState);}
+let hwExpandedState=load('wird_hw_expanded',{}), hwUploadState={};
+function toggleHomeworkSection(lid){hwExpandedState[lid]=!hwExpandedState[lid];save('wird_hw_expanded',hwExpandedState);renderLectures();}
+function isHomeworkExpanded(lid){return !!hwExpandedState[lid];}
+function openHomeworkTelegram(lid){
+  const lec=getLectures().find(l=>l.id===lid);if(!lec)return;
+  const phone=(load('wird_hw_tg_phone',SHEIKH_TG)||SHEIKH_TG).replace(/\D/g,'');
+  const name=load('wird2_name','')||'أحد الإخوة';
+  const text=`📎 سأرسل واجب ${lec.title} كمرفق.\n👤 ${name}`;
+  window.open(`https://t.me/+${phone}?text=${encodeURIComponent(text)}`,'_blank');
+}
+function clearHomeworkUpload(lid){
+  const item=hwUploadState[lid];
+  if(item&&item.previewUrl) URL.revokeObjectURL(item.previewUrl);
+  delete hwUploadState[lid];
+  renderLectures();
+}
+function onHomeworkFileChange(lid,input){
+  const file=input&&input.files&&input.files[0];
+  if(!file) return;
+  const old=hwUploadState[lid];
+  if(old&&old.previewUrl) URL.revokeObjectURL(old.previewUrl);
+  const isImage=file.type.startsWith('image/');
+  hwUploadState[lid]={
+    name:file.name,
+    isImage,
+    previewUrl:isImage?URL.createObjectURL(file):'',
+    type:file.type||''
+  };
+  renderLectures();
+}
 
 function sendLecTG(lid){
   const lec=getLectures().find(l=>l.id===lid);if(!lec)return;
   const name=load('wird2_name','')||'أحد الإخوة';
-  const phone=(load('wird2_tg_phone',SHEIKH_TG)||SHEIKH_TG).replace(/\D/g,'');
+  const phone=(load('wird_hw_tg_phone',SHEIKH_TG)||SHEIKH_TG).replace(/\D/g,'');
   let msg=`📚 *واجب: ${lec.title}*\n🗂️ ${lec.section}\n👤 ${name}\n━━━━━━━━━━━━━━\n`;
   (lec.questions||[]).forEach((q,i)=>{const ans=(hwState[hwKey(lid,i)]&&hwState[hwKey(lid,i)].text)||'—';msg+=`\n*س${i+1}: ${q}*\n✏️ ${ans}\n`;});
   window.open(`https://t.me/+${phone}?text=${encodeURIComponent(msg)}`,'_blank');
@@ -823,23 +869,53 @@ function renderLectures(){
     const q=lec.questions||[],done=q.filter((_,i)=>isAns(lec.id,i)).length;
     const bc=!q.length?'empty':done===q.length?'done-all':'partial';
     const bt=q.length?`${done}/${q.length} ✔`:'بدون أسئلة';
-    const qs=q.length?`<div class="qs-section">
-      <div class="qs-header"><span class="qs-label">أسئلة الواجب</span><span class="qs-prog">${done}/${q.length}</span></div>
+    const expanded=isHomeworkExpanded(lec.id);
+    const fileInfo=hwUploadState[lec.id];
+    const filePreview=fileInfo?`<div class="q-file-preview">
+      <div class="q-file-name">المرفق الحالي: ${fileInfo.name}</div>
+      ${fileInfo.isImage?`<img class="q-file-img" src="${fileInfo.previewUrl}" alt="معاينة الواجب"/>`:''}
+      <div class="q-file-actions">
+        <button class="q-alt-btn" onclick="openHomeworkTelegram('${lec.id}')">فتح تيليجرام لإرسال المرفق</button>
+        <button class="q-alt-btn" onclick="clearHomeworkUpload('${lec.id}')">حذف المرفق</button>
+      </div>
+    </div>`:'';
+    const qs=q.length?`<div class="qs-section${expanded?' expanded':''}">
+      <div class="qs-header" onclick="toggleHomeworkSection('${lec.id}')">
+        <div>
+          <div class="qs-label">الواجب</div>
+          <div class="qs-hint">اضغط لعرض الواجب كاملًا أو إخفائه</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="qs-prog">${done}/${q.length}</span>
+          <span class="qs-arrow">⌄</span>
+        </div>
+      </div>
+      <div class="qs-body">
       ${q.map((qtext,i)=>{const ans=isAns(lec.id,i);const saved=(hwState[hwKey(lec.id,i)]&&hwState[hwKey(lec.id,i)].text)||'';
-        return `<div class="q-item${ans?' answered':''}">
+        return `<div class="q-entry"><div class="q-item${ans?' answered':''}">
           <div class="q-head" onclick="toggleQ('${lec.id}',${i})">
             <span class="q-num">س${i+1}</span>
             <span class="q-text">${qtext}</span>
             <div class="q-circle"><div class="q-tick"></div></div>
           </div>
           <div class="q-answer-box">
-            <textarea class="q-answer-inp" placeholder="اكتب إجابتك هنا..." oninput="saveAns('${lec.id}',${i},this.value)">${saved}</textarea>
-            <button class="q-send-btn" onclick="sendLecTG('${lec.id}')">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-              إرسال الواجب للشيخ
-            </button>
+            <textarea class="q-answer-inp" placeholder="اكتب إجابتك هنا إن أردت الإرسال كرسالة..." oninput="saveAns('${lec.id}',${i},this.value)">${saved}</textarea>
+            <div class="q-send-row">
+              <button class="q-send-btn" onclick="sendLecTG('${lec.id}')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                إرسال الإجابة النصية
+              </button>
+            </div>
           </div>
-        </div>`;}).join('')}
+        </div></div>`;}).join('')}
+        <div class="q-attach-wrap">
+          <div class="q-attach-title">أو ارفع الواجب كصورة أو PDF</div>
+          <div class="q-attach-sub">يمكن للطالب الحل على ورقة ثم رفع الصورة أو الملف من هنا، وبعد ذلك يفتح تيليجرام لإرسال المرفق للشيخ.</div>
+          <input class="q-file-input" type="file" accept="image/*,.pdf" onchange="onHomeworkFileChange('${lec.id}',this)"/>
+          ${filePreview}
+          ${!fileInfo?`<div class="q-file-actions"><button class="q-alt-btn" onclick="openHomeworkTelegram('${lec.id}')">فتح تيليجرام لإرسال المرفق</button></div>`:''}
+        </div>
+      </div>
     </div>`:'';
     const driveEmbed=isGoogleDriveAudio(lec.url)?`<iframe class="drive-frame" src="${resolveLectureEmbedUrl(lec.url)}" allow="autoplay"></iframe>`:'';
     const nativeAudio=!driveEmbed?`<audio class="audio-player" controls preload="none" src="${resolveLectureAudioUrl(lec.url)}"></audio>`:'';
@@ -1067,15 +1143,17 @@ function render(){
     </div>`;
   }).join('');
 
-  const sTg=load('wird2_tg_phone',SHEIKH_TG),sName=load('wird2_name',''),sComment=load('wird2_comment',''),sCity=load('wird2_city','Cairo');
+  const sTg=load('wird2_tg_phone',SHEIKH_TG),sHwTg=load('wird_hw_tg_phone',SHEIKH_TG),sName=load('wird2_name',''),sComment=load('wird2_comment',''),sCity=load('wird2_city','Cairo');
   const histHTML=history.length?`<div class="history-box"><div class="history-title">سجل الأيام السابقة</div>${history.map(h=>{const p=Math.round(h.got/h.max*100);return`<div class="history-row"><span style="color:var(--muted)">${h.label}</span><span style="font-weight:700;color:${p>=80?'var(--green)':p>=50?'var(--amber)':'var(--red)'}">${fmt(h.got)}/${h.max} (${p}%)</span></div>`;}).join('')}</div>`:'';
 
   document.getElementById('bottom').innerHTML=`
     <div class="input-card">
       <label>اسمك (يظهر في رسالة الشيخ)</label>
       <input type="text" placeholder="مثال: محمد أحمد" value="${sName}" oninput="save('wird2_name',this.value)"/>
-      <label>رقم الشيخ على تليجرام</label>
+      <label>رقم شيخ الورد على تليجرام</label>
       <input type="tel" value="${sTg}" oninput="save('wird2_tg_phone',this.value)" style="direction:ltr;font-family:monospace"/>
+      <label>رقم شيخ الواجبات على تليجرام</label>
+      <input type="tel" value="${sHwTg}" oninput="save('wird_hw_tg_phone',this.value)" style="direction:ltr;font-family:monospace"/>
       <label>تعليق أو ملاحظة للشيخ (اختياري)</label>
       <textarea placeholder="اكتب أي ملاحظة هنا..." oninput="save('wird2_comment',this.value)">${sComment}</textarea>
       <label>مدينتك (لأوقات الأذان)</label>
