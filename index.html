@@ -166,9 +166,6 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .q-send-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
 .q-send-btn{padding:8px 16px;background:var(--tg);color:#fff;border:none;border-radius:10px;font-size:13px;font-family:'Tajawal',sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
 .q-send-btn:hover{background:#1a8bc2;}
-.q-submit-btn{padding:8px 14px;background:var(--green-dark);color:#fff;border:none;border-radius:10px;font-size:13px;font-family:'Tajawal',sans-serif;cursor:pointer;}
-.q-submit-btn.done{background:var(--green);}
-.q-submit-note{font-size:12px;color:var(--green-dark);font-weight:700;}
 .q-attach-wrap{padding:12px 14px 14px;background:var(--bg);display:flex;flex-direction:column;gap:8px;}
 .q-attach-title{font-size:12px;font-weight:700;color:var(--green-dark);}
 .q-attach-sub{font-size:12px;color:var(--muted);line-height:1.6;}
@@ -775,11 +772,9 @@ function hwKey(lid,qi){return lid+'__'+qi;}
 function isAns(lid,qi){const k=hwKey(lid,qi);return !!(hwState[k]&&hwState[k].answered);}
 function toggleQ(lid,qi){const k=hwKey(lid,qi);if(!hwState[k])hwState[k]={answered:false,text:''};hwState[k].answered=!hwState[k].answered;save('wird_hw_state',hwState);renderLectures();}
 function saveAns(lid,qi,txt){const k=hwKey(lid,qi);if(!hwState[k])hwState[k]={answered:true,text:''};hwState[k].text=txt;save('wird_hw_state',hwState);}
-let hwExpandedState=load('wird_hw_expanded',{}), hwUploadState={}, hwSubmittedState=load('wird_hw_submitted',{});
+let hwExpandedState=load('wird_hw_expanded',{}), hwUploadState={};
 function toggleHomeworkSection(lid){hwExpandedState[lid]=!hwExpandedState[lid];save('wird_hw_expanded',hwExpandedState);renderLectures();}
 function isHomeworkExpanded(lid){return !!hwExpandedState[lid];}
-function isHomeworkSubmitted(lid){return !!hwSubmittedState[lid];}
-function toggleHomeworkSubmitted(lid){hwSubmittedState[lid]=!hwSubmittedState[lid];save('wird_hw_submitted',hwSubmittedState);renderLectures();}
 function openHomeworkTelegram(lid){
   const lec=getLectures().find(l=>l.id===lid);if(!lec)return;
   const phone=(load('wird_hw_tg_phone',SHEIKH_TG)||SHEIKH_TG).replace(/\D/g,'');
@@ -1159,7 +1154,6 @@ function render(){
       <input type="tel" value="${sTg}" oninput="save('wird2_tg_phone',this.value)" style="direction:ltr;font-family:monospace"/>
       <label>رقم شيخ الواجبات على تليجرام</label>
       <input type="tel" value="${sHwTg}" oninput="save('wird_hw_tg_phone',this.value)" style="direction:ltr;font-family:monospace"/>
-      <div style="font-size:12px;color:var(--muted);line-height:1.6">هذا الرقم يُستخدم فقط عند إرسال واجبات المحاضرات أو عند فتح تيليجرام لإرسال المرفقات.</div>
       <label>تعليق أو ملاحظة للشيخ (اختياري)</label>
       <textarea placeholder="اكتب أي ملاحظة هنا..." oninput="save('wird2_comment',this.value)">${sComment}</textarea>
       <label>مدينتك (لأوقات الأذان)</label>
