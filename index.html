@@ -3,30 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>المدرسة الربانية - الإصدار المتكامل</title>
+<title>المدرسة الربانية - النسخة المتكاملة</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
 :root {
-  --green:#1D9E75;--green-light:#E1F5EE;--green-dark:#0F6E56;
-  --blue:#185FA5;--blue-light:#E6F1FB;
-  --amber:#B5710A;--amber-light:#FAEEDA;
-  --purple:#7F77DD;--purple-light:#EEEDFE;
-  --red:#A32D2D;--red-light:#FCEBEB;
-  --orange:#c0570a;--orange-light:#fff3e6;
+  --green:#1D9E75; --green-light:#E1F5EE; --green-dark:#0F6E56;
+  --blue:#185FA5; --blue-light:#E6F1FB;
+  --amber:#B5710A; --amber-light:#FAEEDA;
+  --purple:#7F77DD; --purple-light:#EEEDFE;
+  --red:#A32D2D; --red-light:#FCEBEB;
+  --orange:#c0570a; --orange-light:#fff3e6;
   --tg:#229ED9;
-  --bg:#F5F3EE;--card:#FFFFFF;
-  --border:rgba(0,0,0,0.07);--text:#1a1a1a;--muted:#888;
+  --bg:#F5F3EE; --card:#FFFFFF;
+  --border:rgba(0,0,0,0.07); --text:#1a1a1a; --muted:#888;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:5rem;}
 .header{background:var(--green-dark);color:#fff;padding:1rem 1rem 0.8rem;text-align:center;position:relative;}
 .header h1{font-size:20px;font-weight:700;}
-.header .sub{font-size:12px;opacity:.7;margin-top:3px;display:flex;justify-content:center;gap:12px;}
+.header .sub{font-size:12px;opacity:.7;margin-top:3px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
 .lang-switch{position:absolute;left:12px;top:12px;background:rgba(255,255,255,0.2);border:none;color:#fff;padding:4px 10px;border-radius:20px;font-size:12px;cursor:pointer;}
 .tab-bar{position:fixed;bottom:0;left:0;right:0;background:var(--green-dark);display:flex;border-top:1px solid rgba(255,255,255,0.12);z-index:100;}
-.tab-btn{flex:1;padding:8px 4px 10px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:11px;font-family:'Tajawal',sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;border-top:2.5px solid transparent;transition:all .15s;}
+.tab-btn{flex:1;padding:8px 4px 10px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:11px;font-family:'Tajawal',sans-serif;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;border-top:2.5px solid transparent;}
 .tab-btn.active{color:#fff;border-top-color:#fff;}
 .tab-btn svg{width:20px;height:20px;}
 .page{display:none;}
@@ -47,12 +47,12 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .pt.active .pt-dot{opacity:1;}
 .pt-next{font-size:9px;color:rgba(255,255,255,.7);margin-top:1px;}
 .prayer-city{font-size:11px;color:rgba(255,255,255,.7);text-align:center;padding:4px 0 0;}
-.notif-btn{display:block;width:calc(100% - 2rem);margin:8px 1rem 0;padding:7px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:10px;color:#fff;font-size:12px;font-family:'Tajawal',sans-serif;cursor:pointer;text-align:center;}
+.notif-btn{display:block;width:calc(100% - 2rem);margin:8px 1rem 0;padding:7px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:10px;color:#fff;font-size:12px;cursor:pointer;text-align:center;}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:1rem;}
 .stat{background:var(--card);border-radius:12px;padding:10px;text-align:center;border:.5px solid var(--border);}
 .stat-n{font-size:20px;font-weight:700;}
 .stat-l{font-size:11px;color:var(--muted);margin-top:2px;}
-.sections{padding:0 1rem;display:flex;flex-direction:column;gap:10px;}
+.sections{padding:0 1rem;display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
 .card{background:var(--card);border-radius:14px;overflow:hidden;border:.5px solid var(--border);}
 .card-header{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:.5px solid var(--border);}
 .card-title{font-size:15px;font-weight:700;}
@@ -65,7 +65,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .item.qada .item-main{background:var(--orange-light);}
 .item-right{display:flex;align-items:center;gap:8px;flex:1;min-width:0;}
 .item-name{font-size:14px;flex:1;}
-.pts-badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap;flex-shrink:0;}
+.pts-badge{font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px;white-space:nowrap;background:var(--bg);}
 .circle{width:24px;height:24px;border-radius:50%;border:1.5px solid #ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .item.done .circle{background:var(--green);border-color:var(--green);}
 .item.qada .circle{background:var(--orange);border-color:var(--orange);}
@@ -78,15 +78,15 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .comment-popup.active{display:flex;}
 .comment-card{background:#fff;width:90%;max-width:350px;border-radius:24px;padding:20px;text-align:center;}
 .comment-card textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #ddd;margin:12px 0;font-family:'Tajawal',sans-serif;min-height:80px;}
-.comment-card button{padding:8px 16px;background:var(--green);color:#fff;border:none;border-radius:30px;margin:5px;}
+.comment-card button{padding:8px 16px;background:var(--green);color:#fff;border:none;border-radius:30px;margin:5px;cursor:pointer;}
 .cat-bar{height:4px;background:#eee;}
 .cat-bar-fill{height:100%;transition:width .4s;}
 .bottom{padding:1rem;display:flex;flex-direction:column;gap:10px;}
 .input-card{background:var(--card);border-radius:14px;padding:14px;border:.5px solid var(--border);display:flex;flex-direction:column;gap:10px;}
-.input-card input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:10px;}
+.input-card input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:10px;font-family:'Tajawal',sans-serif;}
 .tg-btn{width:100%;padding:14px;background:var(--tg);color:#fff;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;}
 .share-img-btn{background:var(--purple);margin-top:5px;}
-.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:8px 16px;border-radius:40px;font-size:12px;z-index:300;opacity:0;transition:0.2s;}
+.toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:8px 16px;border-radius:40px;font-size:12px;z-index:300;opacity:0;transition:0.2s;pointer-events:none;}
 .ath-header{background:linear-gradient(135deg,#0F6E56,#1D9E75);padding:14px 1rem 10px;display:flex;align-items:center;justify-content:space-between;}
 .ath-reset-all{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:12px;padding:5px 12px;border-radius:20px;cursor:pointer;}
 .ath-cats{display:flex;gap:6px;padding:10px 1rem;overflow-x:auto;background:var(--card);border-bottom:.5px solid var(--border);}
@@ -115,8 +115,9 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 .ath-progress-fill{height:100%;background:var(--green);transition:width .3s;}
 .audio-library{background:var(--card);border-radius:20px;margin:12px;padding:12px;}
 .audio-item{display:flex;align-items:center;gap:12px;padding:10px;border-bottom:1px solid var(--border);}
-.audio-play{background:var(--purple);border:none;width:44px;height:44px;border-radius:50%;color:#fff;cursor:pointer;}
-.lec-list{padding:1rem;}
+.audio-play{background:var(--purple);border:none;width:44px;height:44px;border-radius:50%;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.lec-list{padding:1rem;text-align:center;color:var(--muted);}
+.admin-wrap{padding:1rem;}
 </style>
 </head>
 <body>
@@ -128,7 +129,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 
 <div id="page-wird" class="page active">
   <div class="score-bar"><span class="score-text" id="score-text">0 / 0</span><div class="prog-out"><div class="prog-in" id="main-bar"></div></div><span class="pct" id="pct-label">0%</span></div>
-  <div class="prayer-bar" id="prayer-bar">جاري تحميل الأوقات...</div>
+  <div class="prayer-bar" id="prayer-bar">⏳ جاري تحميل أوقات الصلاة...</div>
   <button class="notif-btn" onclick="requestNotification()">🔔 تفعيل تذكيرات الأذان</button>
   <div class="stats">
     <div class="stat"><div class="stat-n" id="s-got">0</div><div class="stat-l">نقاطك</div></div>
@@ -147,7 +148,7 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 </div>
 
 <div id="page-lectures" class="page"><div class="lec-list">📘 سيتم إضافة المحاضرات من قبل الشيخ قريباً</div></div>
-<div id="page-admin" class="page"><div class="admin-wrap" style="padding:1rem">🔐 لوحة الشيخ (محمية)</div></div>
+<div id="page-admin" class="page"><div class="admin-wrap">🔐 لوحة الشيخ (محمية)</div></div>
 
 <div id="page-audio" class="page">
   <div class="ath-header" style="background:linear-gradient(135deg,#534AB7,#7F77DD);"><span>🎧 المكتبة الصوتية</span><span>تلاوات وأدعية</span></div>
@@ -166,25 +167,30 @@ body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);min
 <div id="commentPopup" class="comment-popup"><div class="comment-card"><h4>📝 تعليق على البند</h4><textarea id="commentText" placeholder="سبب عدم الإنجاز أو ملاحظة..."></textarea><button onclick="saveComment()">حفظ</button><button onclick="closeCommentPopup()">إلغاء</button></div></div>
 
 <script>
-// ----------------------------------- البيانات الأساسية -----------------------------------
-const SECTIONS = ['الكل', 'الفقه', 'السيرة', 'التزكية'];
+// ------------------- البيانات الأساسية -------------------
 const DATA = [
-  {id:'fajr',title:'الفجر',color:'#185FA5',items:[{id:'fajr_salah',name:'صلاة الفجر جماعة',pts:5,isSalah:true},{id:'fajr_athkar',name:'أذكار الصباح',pts:1}]},
-  {id:'duhr',title:'الظهر',color:'#1D9E75',items:[{id:'duhr_salah',name:'صلاة الظهر جماعة',pts:5,isSalah:true}]},
+  {id:'fajr',title:'الفجر',color:'#185FA5',items:[{id:'fajr_salah',name:'صلاة الفجر جماعة',pts:5,isSalah:true},{id:'fajr_athkar',name:'أذكار الصباح',pts:2}]},
+  {id:'duhr',title:'الظهر',color:'#1D9E75',items:[{id:'duhr_salah',name:'صلاة الظهر جماعة',pts:5,isSalah:true},{id:'duhr_sunnah',name:'سنة الظهر القبلية',pts:1}]},
   {id:'asr',title:'العصر',color:'#B5710A',items:[{id:'asr_salah',name:'صلاة العصر جماعة',pts:5,isSalah:true}]},
-  {id:'maghrib',title:'المغرب',color:'#7F77DD',items:[{id:'mgh_salah',name:'صلاة المغرب جماعة',pts:5,isSalah:true}]},
-  {id:'isha',title:'العشاء',color:'#A32D2D',items:[{id:'isha_salah',name:'صلاة العشاء جماعة',pts:5,isSalah:true},{id:'isha_athkar',name:'أذكار المساء',pts:1}]},
-  {id:'extra',title:'النوافل',color:'#0F6E56',items:[{id:'qiyam',name:'قيام الليل',pts:2},{id:'quran',name:'ورد قرآن',pts:1}]}
+  {id:'maghrib',title:'المغرب',color:'#7F77DD',items:[{id:'maghrib_salah',name:'صلاة المغرب جماعة',pts:5,isSalah:true},{id:'maghrib_sunnah',name:'سنة المغرب البعدية',pts:1}]},
+  {id:'isha',title:'العشاء',color:'#A32D2D',items:[{id:'isha_salah',name:'صلاة العشاء جماعة',pts:5,isSalah:true},{id:'isha_athkar',name:'أذكار المساء',pts:2}]},
+  {id:'extra',title:'النوافل',color:'#0F6E56',items:[{id:'qiyam',name:'قيام الليل',pts:3},{id:'quran',name:'ورد قرآن (جزء)',pts:2},{id:'siyam',name:'صيام (تطوع)',pts:2}]}
 ];
-// قائمة الأذكار الكاملة (مصغرة ولكن متنوعة)
+
+// قائمة الأذكار الكاملة
 const ATHKAR = [
-  {id:'a1',cat:'صباح',short:'آية الكرسي',trans:'حفظ من الشيطان',source:'البخاري',target:1},
+  {id:'a1',cat:'صباح',short:'آية الكرسي',trans:'أعظم آية في القرآن',source:'البخاري',target:1},
   {id:'a2',cat:'صباح',short:'سبحان الله وبحمده',trans:'100 مرة',source:'مسلم',target:100},
-  {id:'a3',cat:'مساء',short:'المعوذات',trans:'3 مرات',source:'أبو داود',target:3},
-  {id:'a4',cat:'تسبيح',short:'سبحان الله',trans:'33 مرة',source:'مسلم',target:33},
-  {id:'a5',cat:'تسبيح',short:'الحمد لله',trans:'33 مرة',source:'مسلم',target:33},
-  {id:'a6',cat:'استغفار',short:'أستغفر الله',trans:'100 مرة',source:'مسلم',target:100},
-  {id:'a7',cat:'نوم',short:'آية الكرسي قبل النوم',trans:'مرة',source:'البخاري',target:1}
+  {id:'a3',cat:'صباح',short:'لا إله إلا الله وحده لا شريك له',trans:'10 مرات',source:'البخاري',target:10},
+  {id:'b1',cat:'مساء',short:'أمسينا وأمسى الملك لله',trans:'مرة',source:'مسلم',target:1},
+  {id:'b2',cat:'مساء',short:'المعوذات (الإخلاص-الفلق-الناس)',trans:'3 مرات لكل سورة',source:'أبو داود',target:3},
+  {id:'c1',cat:'تسبيح',short:'سبحان الله',trans:'33 مرة',source:'مسلم',target:33},
+  {id:'c2',cat:'تسبيح',short:'الحمد لله',trans:'33 مرة',source:'مسلم',target:33},
+  {id:'c3',cat:'تسبيح',short:'الله أكبر',trans:'34 مرة',source:'مسلم',target:34},
+  {id:'d1',cat:'استغفار',short:'أستغفر الله',trans:'100 مرة',source:'مسلم',target:100},
+  {id:'d2',cat:'استغفار',short:'أستغفر الله وأتوب إليه',trans:'100 مرة',source:'البخاري',target:100},
+  {id:'e1',cat:'نوم',short:'آية الكرسي قبل النوم',trans:'مرة',source:'البخاري',target:1},
+  {id:'e2',cat:'نوم',short:'اللهم باسمك أموت وأحيا',trans:'مرة',source:'البخاري',target:1}
 ];
 const ATH_CATS = ['الكل', 'صباح', 'مساء', 'تسبيح', 'استغفار', 'نوم'];
 
@@ -194,12 +200,12 @@ function save(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
 function todayKey() { const d = new Date(); return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`; }
 function todayLabel() { return new Date().toLocaleDateString('ar-EG', { weekday:'long', year:'numeric', month:'long', day:'numeric' }); }
 function fmt(n) { return Math.round(n * 10) / 10; }
+function showToast(msg) { const t = document.getElementById('toastMsg'); t.textContent = msg; t.style.opacity = '1'; setTimeout(() => t.style.opacity = '0', 2000); }
 
 let currentLang = 'ar';
 function toggleLanguage() { currentLang = currentLang === 'ar' ? 'en' : 'ar'; renderWird(); renderAthkar(); }
-function showToast(msg) { const t = document.getElementById('toastMsg'); t.textContent = msg; t.style.opacity = '1'; setTimeout(() => t.style.opacity = '0', 2000); }
 
-// ------------------- الورد اليومي والمحاسبة -------------------
+// ------------------- الورد والمحاسبة -------------------
 let state = load('wird_state', {});
 let history = load('wird_history', []);
 let comments = load('wird_comments', {});
@@ -217,10 +223,10 @@ function toggleQada(id, checked) { state[TK][id] = checked ? 'qada' : 'done'; sa
 function openComment(itemId) { window.currentCommentId = itemId; const key = `${TK}_${itemId}`; document.getElementById('commentText').value = comments[key] || ''; document.getElementById('commentPopup').classList.add('active'); }
 function closeCommentPopup() { document.getElementById('commentPopup').classList.remove('active'); }
 function saveComment() { if (window.currentCommentId) { const key = `${TK}_${window.currentCommentId}`; comments[key] = document.getElementById('commentText').value; save('wird_comments', comments); closeCommentPopup(); renderWird(); } }
-function checkAchievements() { const streak = calcStreak(); if (streak === 5) showToast('🎉 ماشاء الله! 5 أيام متتالية بنسبة 80%'); if (streak === 7) showToast('🏅 أسبوع كامل من الالتزام!'); }
+function checkAchievements() { const streak = calcStreak(); if (streak === 5) showToast('🎉 ماشاء الله! 5 أيام متتالية بنسبة 80%'); if (streak === 7) showToast('🏅 أسبوع كامل من الالتزام! حصلت على الوسام'); }
 
 function renderWird() {
-  const got = currentPoints(), maxP = maxPoints(), pct = Math.round(got / maxP * 100);
+  const got = currentPoints(), maxP = maxPoints(), pct = maxP ? Math.round(got / maxP * 100) : 0;
   document.getElementById('score-text').innerHTML = `${fmt(got)} / ${maxP}`;
   document.getElementById('main-bar').style.width = pct + '%';
   document.getElementById('pct-label').innerHTML = pct + '%';
@@ -245,7 +251,7 @@ function renderWird() {
           <div class="item-right"><span class="item-name">${it.name} ${hasComment}</span><span class="pts-badge">${isQada ? fmt(it.pts/2) : it.pts}</span></div>
           <div class="circle"><div class="tick"></div></div>
         </div>
-        ${(it.isSalah) ? `<div class="qada-row"><label class="qada-toggle"><input type="checkbox" ${isQada ? 'checked' : ''} onchange="toggleQada('${it.id}',this.checked)"/><span>قضاء (نصف)</span></label><button class="comment-btn" onclick="event.stopPropagation();openComment('${it.id}')">📝</button></div>` : `<div style="padding:5px 14px 8px;"><button class="comment-btn" onclick="event.stopPropagation();openComment('${it.id}')">📝 تعليق</button></div>`}
+        ${(it.isSalah) ? `<div class="qada-row"><label class="qada-toggle" style="display:flex;align-items:center;gap:5px;"><input type="checkbox" ${isQada ? 'checked' : ''} onchange="toggleQada('${it.id}',this.checked)"/><span>قضاء (نصف)</span></label><button class="comment-btn" onclick="event.stopPropagation();openComment('${it.id}')">📝</button></div>` : `<div style="padding:5px 14px 8px;"><button class="comment-btn" onclick="event.stopPropagation();openComment('${it.id}')">📝 تعليق</button></div>`}
       </div>`;
     });
     html += `<div class="cat-bar"><div class="cat-bar-fill" style="width:${catPercent}%;background:${cat.color}"></div></div></div>`;
@@ -255,18 +261,19 @@ function renderWird() {
 }
 
 async function fetchHijri() { try { const res = await fetch(`https://api.aladhan.com/v1/gToH/${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`); const data = await res.json(); if (data.code === 200) document.getElementById('hijriSpan').innerHTML = `🕌 ${data.data.hijri.day} ${data.data.hijri.month.ar} ${data.data.hijri.year}`; } catch(e) {} }
-function sendReport() { const phone = load('sheikh_phone', '201158313603').replace(/\D/g,''); const msg = `تقرير الورد: ${fmt(currentPoints())}/${maxPoints()} نقطة - ${todayLabel()}`; window.open(`https://t.me/+${phone}?text=${encodeURIComponent(msg)}`,'_blank'); }
-async function shareAsImage() { const el = document.querySelector('.sections'); if (!el) return; const canvas = await html2canvas(el, { scale: 2 }); const link = document.createElement('a'); link.download = 'ward_report.png'; link.href = canvas.toDataURL(); link.click(); showToast('تم حفظ الصورة'); }
+function sendReport() { const phone = load('sheikh_phone', '201158313603').replace(/\D/g,''); const msg = `📋 تقرير الورد: ${fmt(currentPoints())}/${maxPoints()} نقطة (${Math.round(currentPoints()/maxPoints()*100)}%) - ${todayLabel()}`; window.open(`https://t.me/+${phone}?text=${encodeURIComponent(msg)}`,'_blank'); showToast('تم فتح محادثة الشيخ'); }
+async function shareAsImage() { const el = document.querySelector('.sections'); if (!el) return; const canvas = await html2canvas(el, { scale: 2 }); const link = document.createElement('a'); link.download = 'ward_report.png'; link.href = canvas.toDataURL(); link.click(); showToast('تم حفظ التقرير كصورة'); }
 
 // ------------------- الأذكار -------------------
 let athkarCounts = load('athkar_counts', {});
 function getAthkarCount(id) { return athkarCounts[id] || 0; }
 function isAthkarDone(id) { const a = ATHKAR.find(x => x.id === id); return a && getAthkarCount(id) >= a.target; }
-function incAthkar(id) { const a = ATHKAR.find(x => x.id === id); if (a && getAthkarCount(id) < a.target) { athkarCounts[id] = (athkarCounts[id] || 0) + 1; save('athkar_counts', athkarCounts); renderAthkar(); } }
+function incAthkar(id) { const a = ATHKAR.find(x => x.id === id); if (a && getAthkarCount(id) < a.target) { athkarCounts[id] = (athkarCounts[id] || 0) + 1; save('athkar_counts', athkarCounts); renderAthkar(); } else if (a && getAthkarCount(id) >= a.target) { showToast('✅ مكتمل! بارك الله فيك'); } }
 function decAthkar(id) { if (getAthkarCount(id) > 0) { athkarCounts[id]--; save('athkar_counts', athkarCounts); renderAthkar(); } }
-function resetAllAthkar() { athkarCounts = {}; save('athkar_counts', athkarCounts); renderAthkar(); }
+function resetAllAthkar() { athkarCounts = {}; save('athkar_counts', athkarCounts); renderAthkar(); showToast('تم إعادة تعيين جميع الأذكار'); }
 let activeCat = 'الكل';
 function setAthCat(cat) { activeCat = cat; renderAthkar(); }
+
 function renderAthkar() {
   const catsHtml = ATH_CATS.map(c => `<button class="ath-cat-btn ${activeCat === c ? 'active' : ''}" onclick="setAthCat('${c}')">${c}</button>`).join('');
   document.getElementById('ath-cats').innerHTML = catsHtml;
@@ -286,26 +293,25 @@ function renderAthkar() {
       <div class="ath-done-badge">✅ اكتمل! بارك الله فيك</div>
     </div>`;
   }).join('');
-  document.getElementById('ath-list').innerHTML = listHtml;
+  document.getElementById('ath-list').innerHTML = listHtml || '<div style="text-align:center;padding:2rem;">لا توجد أذكار في هذا القسم</div>';
 }
 
 // ------------------- أوقات الصلاة والإشعارات -------------------
 let prayerTimes = null;
-async function fetchPrayerTimes(city) {
-  city = city || load('user_city', 'Cairo');
+let city = load('user_city', 'Cairo');
+async function fetchPrayerTimes() {
   try {
     const d = new Date(), dd = String(d.getDate()).padStart(2,'0'), mm = String(d.getMonth()+1).padStart(2,'0'), yy = d.getFullYear();
     const res = await fetch(`https://api.aladhan.com/v1/timingsByCity/${dd}-${mm}-${yy}?city=${encodeURIComponent(city)}&country=EG&method=5`);
     const json = await res.json();
     if (json.code === 200) {
       prayerTimes = json.data.timings;
-      save('user_city', city);
-      renderPrayers(city);
+      renderPrayers();
       scheduleNotifications();
     } else throw new Error();
-  } catch(e) { document.getElementById('prayer-bar').innerHTML = '<div>⚠️ تعذر تحميل الأوقات، تأكد من اتصالك بالإنترنت</div>'; }
+  } catch(e) { document.getElementById('prayer-bar').innerHTML = '<div>⚠️ تعذر تحميل الأوقات، تأكد من الاتصال بالإنترنت</div>'; }
 }
-function renderPrayers(city) {
+function renderPrayers() {
   if (!prayerTimes) return;
   const now = new Date(), nowMin = now.getHours()*60 + now.getMinutes();
   const keys = ['Fajr','Dhuhr','Asr','Maghrib','Isha'];
@@ -315,7 +321,7 @@ function renderPrayers(city) {
   const html = keys.map((k,i) => {
     const isActive = i === nextIdx;
     let nextText = '';
-    if (isActive) { const diff = mins[i] - nowMin; const hr = Math.floor(diff/60), mn = diff%60; nextText = hr>0 ? `بعد ${hr}س ${mn}د` : `بعد ${mn}د`; }
+    if (isActive && mins[i] > nowMin) { const diff = mins[i] - nowMin; const hr = Math.floor(diff/60), mn = diff%60; nextText = hr>0 ? `بعد ${hr}س ${mn}د` : `بعد ${mn}د`; }
     return `<div class="pt ${isActive ? 'active' : ''}"><span class="pt-name">${names[k]}</span><span class="pt-time">${prayerTimes[k].replace(/\s*(AM|PM)/i,'')}</span><div class="pt-dot"></div>${isActive ? `<span class="pt-next">${nextText}</span>` : ''}</div>`;
   }).join('');
   document.getElementById('prayer-bar').innerHTML = `<div class="prayer-times">${html}</div><div class="prayer-city">📍 ${city}</div>`;
@@ -341,21 +347,22 @@ async function requestNotification() {
   else showToast('❌ لم يتم السماح بالإشعارات');
 }
 
-// ------------------- المكتبة الصوتية -------------------
+// ------------------- المكتبة الصوتية (روابط آمنة ومجربة) -------------------
 const audioTracks = [
-  { name: "سورة الفاتحة - مشاري العفاسي", url: "https://server7.mp3quran.net/afsasy/001.mp3" },
-  { name: "آية الكرسي - عبد الباسط", url: "https://server7.mp3quran.net/basit/255.mp3" },
-  { name: "أذكار الصباح - مشاري", url: "https://archive.org/download/azkar_sabah/azkar_sabah.mp3" },
-  { name: "دعاء القنوت - وديع اليمني", url: "https://ia801609.us.archive.org/4/items/dua_qunoot/dua_qunoot.mp3" }
+  { name: "🎙️ سورة الفاتحة - مشاري العفاسي", url: "https://server7.mp3quran.net/afsasy/001.mp3" },
+  { name: "🎙️ آية الكرسي - عبد الباسط", url: "https://server7.mp3quran.net/basit/255.mp3" },
+  { name: "🎙️ أذكار الصباح - مشاري العفاسي", url: "https://archive.org/download/azkar_sabah/azkar_sabah.mp3" },
+  { name: "🎙️ دعاء القنوت - وديع اليمني", url: "https://ia801609.us.archive.org/4/items/dua_qunoot/dua_qunoot.mp3" }
 ];
 let currentAudio = null;
 function playAudioTrack(url, btn) {
   if (currentAudio && !currentAudio.paused) { currentAudio.pause(); currentAudio = null; document.querySelectorAll('.audio-play').forEach(b => b.innerHTML = '▶️'); }
   const audio = new Audio(url);
-  audio.play().catch(e => { showToast('⚠️ تعذر تشغيل الصوت، قد يكون الرابط غير آمن'); });
-  currentAudio = audio;
-  btn.innerHTML = '⏸️';
-  audio.onended = () => { btn.innerHTML = '▶️'; currentAudio = null; };
+  audio.play().then(() => {
+    currentAudio = audio;
+    btn.innerHTML = '⏸️';
+    audio.onended = () => { btn.innerHTML = '▶️'; currentAudio = null; };
+  }).catch(err => { showToast('⚠️ تعذر تشغيل الصوت، الرابط غير آمن أو لا يدعمه المتصفح'); console.error(err); });
 }
 function renderAudioLibrary() {
   const container = document.getElementById('audio-library-container');
@@ -367,19 +374,32 @@ function renderAudioLibrary() {
 function showPage(page) {
   ['wird','athkar','lectures','admin','audio'].forEach(p => {
     document.getElementById(`page-${p}`).classList.toggle('active', p === page);
-    document.querySelector(`.tab-btn[onclick*="${p}"]`)?.classList.toggle('active', p === page);
+    const btn = document.querySelector(`.tab-btn[onclick*="${p}"]`);
+    if (btn) btn.classList.toggle('active', p === page);
   });
   if (page === 'athkar') renderAthkar();
   if (page === 'audio') renderAudioLibrary();
 }
 
+// ------------------- حفظ اليوم في التاريخ عند انتهاء اليوم -------------------
+function saveDayToHistory() {
+  const got = currentPoints(), maxP = maxPoints(), percent = maxP ? Math.round(got/maxP*100) : 0;
+  const existing = history.find(h => h.date === TK);
+  if (!existing && got > 0) {
+    history.unshift({ date: TK, got, max: maxP, percent, label: todayLabel() });
+    if (history.length > 7) history = history.slice(0, 7);
+    save('wird_history', history);
+  }
+}
+setInterval(() => { if (new Date().getHours() === 23 && new Date().getMinutes() > 55) saveDayToHistory(); }, 60000);
+
 // ------------------- التهيئة -------------------
 function init() {
   renderWird();
   renderAthkar();
-  fetchPrayerTimes(load('user_city', 'Cairo'));
-  if (Notification.permission !== 'granted') setTimeout(() => Notification.requestPermission(), 1000);
-  setInterval(() => { if (prayerTimes) renderPrayers(load('user_city','Cairo')); }, 60000);
+  fetchPrayerTimes();
+  if (Notification.permission !== 'granted') setTimeout(() => Notification.requestPermission(), 2000);
+  setInterval(() => { if (prayerTimes) renderPrayers(); }, 60000);
 }
 window.toggleItem = toggleItem; window.toggleQada = toggleQada; window.openComment = openComment; window.saveComment = saveComment; window.closeCommentPopup = closeCommentPopup;
 window.incAthkar = incAthkar; window.decAthkar = decAthkar; window.resetAllAthkar = resetAllAthkar; window.setAthCat = setAthCat;
